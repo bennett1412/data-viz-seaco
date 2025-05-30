@@ -1,241 +1,140 @@
-import React from "react";
-import PopulationPyramid from "./PopulationPyramid";
-import {
-  ResponsiveContainer,
-  BarChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Bar,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
-  ScatterChart,
-  ZAxis,
-  Scatter,
-  AreaChart,
-  Area,
-  RadarChart,
-  PolarGrid,
-  Radar,
-} from "recharts";
-import { hdssData } from "./hdssData";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import ContentBody from "./ContentBody";
 import ChartJsPyramid from "./ChartJsPyramid";
+import type { DataSource } from "./ContentBody";
 
 const Home = () => {
-  const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#8884d8",
-    "#82ca9d",
+  const navigate = useNavigate();
+  const [selectedSource, setSelectedSource] = useState<DataSource | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dataSources: DataSource[] = [
+    {
+      name: "All Data",
+      file: "/data/demo.csv",
+      metadata: {
+        totalParticipants: 5000,
+        collectionDate: "2023-01-15",
+        description: "Complete dataset containing all rounds of data collection, including demographic information, health indicators, and socioeconomic data.",
+        categories: ["Demographics", "Health", "Socioeconomic"],
+        methodology: "Data collection followed WHO STEPS methodology for chronic disease risk factor surveillance. Multi-stage stratified random sampling was employed, with primary sampling units (PSUs) selected based on population density and socioeconomic status. Face-to-face interviews were conducted using standardized WHO STEPS questionnaires, complemented by physical measurements and biochemical assessments."
+      }
+    },
+    {
+      name: "Health Round 1",
+      file: "/data/demo.csv",
+      metadata: {
+        totalParticipants: 2500,
+        collectionDate: "2022-06-01",
+        description: "First round of health data collection focusing on non-communicable diseases and general health indicators.",
+        categories: ["Health", "Demographics"],
+        methodology: "Following the Global Health Observatory (GHO) guidelines, this survey utilized a two-stage cluster sampling design. First stage involved random selection of enumeration blocks, followed by systematic sampling of households within selected blocks. Data collection was conducted through a combination of Computer-Assisted Personal Interviewing (CAPI) and paper-based questionnaires."
+      }
+    },
+    {
+      name: "Health Round 2",
+      file: "/data/demo2.csv",
+      metadata: {
+        totalParticipants: 2800,
+        collectionDate: "2022-12-15",
+        description: "Second round of health data collection with additional focus on disease progression and treatment outcomes.",
+        categories: ["Health", "Demographics", "Treatment"],
+        methodology: "This survey implemented the WHO Health Observatory methodology with a three-stage sampling design. Primary sampling units were selected using probability proportional to size (PPS) sampling, followed by systematic sampling of households and random selection of eligible respondents. Data collection utilized a mixed-mode approach combining face-to-face interviews, self-administered questionnaires, and digital health records linkage."
+      }
+    }
   ];
-  const visualizations = [
-    {
-      id: "barChart",
-      name: "Bar Chart",
-      description: "Comparing population across villages",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={hdssData.demographics}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="population" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      ),
-    },
-    {
-      id: "lineChart",
-      name: "Line Chart",
-      description: "Trends in births and deaths over time",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={hdssData.timeSeriesData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="births"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-            <Line type="monotone" dataKey="deaths" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
-      ),
-    },
-    {
-      id: "pieChart",
-      name: "Pie Chart",
-      description: "Age distribution in the population",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={hdssData.ageDistribution}
-              cx="50%"
-              cy="50%"
-              labelLine={true}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-              label={({ name, value }) => `${name}: ${value}%`}
-            >
-              {hdssData.ageDistribution.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      ),
-    },
-    {
-      id: "scatterChart",
-      name: "Scatter Chart",
-      description: "Birth rate vs. death rate by village size",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-            <CartesianGrid />
-            <XAxis
-              type="number"
-              dataKey="birthRate"
-              name="Birth Rate"
-              unit="%"
-            />
-            <YAxis
-              type="number"
-              dataKey="deathRate"
-              name="Death Rate"
-              unit="%"
-            />
-            <ZAxis
-              type="number"
-              dataKey="population"
-              range={[50, 400]}
-              name="Population"
-            />
-            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-            <Legend />
-            <Scatter
-              name="Villages"
-              data={hdssData.demographics}
-              fill="#8884d8"
-            />
-          </ScatterChart>
-        </ResponsiveContainer>
-      ),
-    },
-    {
-      id: "areaChart",
-      name: "Area Chart",
-      description: "Population movement: births, deaths, and migration",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <AreaChart data={hdssData.timeSeriesData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Area
-              type="monotone"
-              dataKey="births"
-              stackId="1"
-              stroke="#8884d8"
-              fill="#8884d8"
-            />
-            <Area
-              type="monotone"
-              dataKey="deaths"
-              stackId="1"
-              stroke="#82ca9d"
-              fill="#82ca9d"
-            />
-            <Area
-              type="monotone"
-              dataKey="migration"
-              stackId="1"
-              stroke="#ffc658"
-              fill="#ffc658"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      ),
-    },
-    {
-      id: "radarChart",
-      name: "Radar Chart",
-      description: "Health indicators across villages",
-      component: (
-        <ResponsiveContainer width="100%" height={300}>
-          <RadarChart outerRadius={90} data={hdssData.healthIndicators}>
-            <PolarGrid />
-            <Tooltip />
-            <Legend />
-            <Radar
-              name="Immunization Rate"
-              dataKey="immunizationRate"
-              stroke="#8884d8"
-              fill="#8884d8"
-              fillOpacity={0.6}
-            />
-            <Radar
-              name="Access to Water"
-              dataKey="accessToWater"
-              stroke="#82ca9d"
-              fill="#82ca9d"
-              fillOpacity={0.6}
-            />
-            <Radar
-              name="Malnutrition"
-              dataKey="malnutrition"
-              stroke="#ff8042"
-              fill="#ff8042"
-              fillOpacity={0.6}
-            />
-          </RadarChart>
-        </ResponsiveContainer>
-      ),
-    },
-  ];
+
+  const filteredSources = dataSources.filter(source =>
+    source.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    source.metadata?.categories.some(cat => cat.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
+  const totalParticipants = dataSources.reduce((sum, source) => sum + (source.metadata?.totalParticipants || 0), 0);
+  const uniqueCategories = Array.from(new Set(dataSources.flatMap(source => source.metadata?.categories || [])));
+
+  const handleSourceClick = (source: DataSource | null) => {
+    setSelectedSource(source);
+  };
+
+  const getVisualisations = (sourceId: string) => {
+    return <ChartJsPyramid source={sourceId} />;
+  };
+
   return (
-    <div className="dashboard">
-      <header className="header">
-        <h1>SEACO Data Visualization Dashboard</h1>
-      </header>
-      <main className="main">
-        <section className="pyramid-section">
-          {/* <PopulationPyramid /> */}
-          <ChartJsPyramid />
-        </section>
-        <section className="other-section">
-          {visualizations.map((viz) => (
-            <div key={viz.id} className="card">
-              <h2>{viz.name}</h2>
-              <p>{viz.description}</p>
-              <div className="chart-container">{viz.component}</div>
+    <div className="dashboard bg-gray-100 min-h-screen flex flex-col">
+      {/* Search and Navigation Section */}
+      <div className="bg-white shadow-md p-6">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="w-full md:w-1/2">
+              <input
+                type="text"
+                placeholder="Search datasets..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
-          ))}
-        </section>
-      </main>
+            <div className="flex gap-4">
+              <button
+                onClick={() => navigate('/map')}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Map View
+              </button>
+              <button
+                onClick={() => navigate('/timeline')}
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              >
+                Timeline View
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Section */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">Total Participants</h3>
+            <p className="text-3xl font-bold text-blue-600">{totalParticipants.toLocaleString()}</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">Available Datasets</h3>
+            <p className="text-3xl font-bold text-green-600">{dataSources.length}</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">Data Categories</h3>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {uniqueCategories.map((category, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <main className="main">
+          <ContentBody
+            dataSources={filteredSources}
+            selectedSource={selectedSource!}
+            categories={[
+              { name: "Demographic Data", data: [true, true, true] },
+              { name: "NCI Data", data: [true, true, true] },
+              { name: "Wealth data", data: [true, false, false] },
+            ]}
+            handleSourceClick={handleSourceClick}
+            getVisualisations={getVisualisations}
+          />
+        </main>
+      </div>
     </div>
   );
 };

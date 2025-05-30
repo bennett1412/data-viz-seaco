@@ -1,3 +1,9 @@
+/* Tailwind Base Styles */
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* App.css */
 .App {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -55,65 +61,4 @@
   display: flex;
   gap: 10px;
   margin: 10px 0;
-}
-
-.rating-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.rating-button.selected {
-  background-color: #4a6cf7;
-  color: white;
-  border-color: #4a6cf7;
-}
-
-.rating-text {
-  margin-top: 5px;
-  font-style: italic;
-  color: #555;
-}
-
-.feedback-section {
-  margin-top: 40px;
-  padding: 25px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.feedback-textarea {
-  width: 100%;
-  margin: 15px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-.submit-button {
-  background-color: #4a6cf7;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.submit-button:hover {
-  background-color: #3a5ce5;
-}
-
-@media (max-width: 768px) {
-  .visualization-grid {
-    grid-template-columns: 1fr;
-  }
 }

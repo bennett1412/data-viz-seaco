@@ -1,0 +1,60 @@
+/* Custom styles for details/summary components */
+details {
+  position: relative;
+}
+
+details summary {
+  position: relative;
+}
+
+/* Remove default arrow */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom arrow styling */
+details summary::before {
+  content: '';
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Rotate arrow when details is open */
+details[open] summary::before {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Hover effect for the arrow */
+details summary:hover::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234B5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Smooth transition for content */
+details > div {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add a subtle animation when opening/closing */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+details[open] > div {
+  animation: slideDown 0.3s ease-out;
+} 

@@ -1,0 +1,140 @@
+.map-view-container {
+  display: flex;
+  height: 100vh;
+  background: #f8f9fa;
+}
+
+.map-view-main {
+  flex: 1;
+  padding: 20px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.map-view-main h1 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.map-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.map-placeholder {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px dashed #dee2e6;
+  color: #666;
+  font-style: italic;
+}
+
+.detail-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 400px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.detail-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.detail-panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #1f2937;
+}
+
+.detail-panel-content {
+  padding: 16px 0;
+}
+
+.detail-panel-content p {
+  margin: 0 0 16px 0;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.detail-panel-content ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #4b5563;
+}
+
+.detail-panel-content li {
+  margin-bottom: 8px;
+}
+
+.pyramid-container {
+  width: 100%;
+  height: 400px;
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+
+/* Leaflet map custom styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.leaflet-control-container .leaflet-control {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+}
+
+.leaflet-control-zoom a {
+  color: #4b5563 !important;
+  border: none !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #f3f4f6 !important;
+  color: #1f2937 !important;
+} 

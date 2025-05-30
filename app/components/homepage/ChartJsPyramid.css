@@ -4,12 +4,12 @@
     font-family: sans-serif;
   }
   
-  .chartMenu {
+  /* .chartMenu {
     width: 100vw;
     height: 40px;
     background: #1A1A1A;
     color: rgba(54, 162, 235, 1);
-  }
+  } */
   
   .chartMenu p {
     padding: 10px;

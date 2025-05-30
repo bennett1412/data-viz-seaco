@@ -1,93 +1,81 @@
-// Enums for fixed categories
-export enum Gender {
-  M = "M",
-  F = "F",
-}
+export type Gender = "M" | "F";
 
-export enum Citizenship {
-  Malaysian = "Malaysian",
-  // Add other citizenships if needed
-}
+export type Citizenship = "Malaysian"; // Extend as needed
 
-export enum Ethnicity {
-  Malay = "Malay",
-  Chinese = "Chinese",
-  Indian = "Indian",
-  OrangAsli = "OrangAsli",
-  Other = "Other",
-}
+export type Ethnicity = "Malay" | "Chinese" | "Indian" | "OrangAsli" | "Other";
 
-export enum MaritalStatus {
-  Single = "Single",
-  Married = "Married",
-  Divorced = "Divorced",
-  Widowed = "Widowed",
-  Separated = "Separated",
-}
+export type MaritalStatus = "Single" | "Married" | "Divorced" | "Widowed" | "Separated";
 
-export enum SchoolType {
-  National_Pri = "National_Pri",
-  National_Sec = "National_Sec",
-  Chinese_Pri = "Chinese_Pri",
-  Tamil_Pri = "Tamil_Pri",
-  Vocational = "Vocational",
-  Religious = "Religious",
-}
+export type SchoolType =
+  | "National_Pri"
+  | "National_Sec"
+  | "Chinese_Pri"
+  | "Tamil_Pri"
+  | "Vocational"
+  | "Religious";
 
-export enum EducationLevel {
-  Primary = "Primary",
-  Secondary = "Secondary",
-  College = "College",
-  University = "University",
-}
+export type EducationLevel = "Primary" | "Secondary" | "College" | "University";
 
-export enum Relationship {
-  Head = "Head",
-  Wife = "Wife",
-  Husband = "Husband",
-  Son = "Son",
-  Daughter = "Daughter",
-  Grandmother = "Grandmother",
-  Grandfather = "Grandfather",
-  Child = "Child",
-}
+export type Relationship =
+  | "Head"
+  | "Wife"
+  | "Husband"
+  | "Son"
+  | "Daughter"
+  | "Grandmother"
+  | "Grandfather"
+  | "Child";
 
-// Interface for literacy status
-export interface LiteracyStatus {
-  english: boolean;
-  malay: boolean;
-  chinese: boolean;
-  tamil: boolean;
-}
+export type YesNo = "Yes" | "No"; // For boolean-like string values in CSV
 
-// Interface for income details
-export interface Income {
-  personal: number;
-  household: number;
-  other: number;
-  total: number;
-}
+export type AreaType = "Urban" | "Rural";
 
-// Interface for education details
-export interface Education {
-  currentlyStudying: boolean;
-  educationLevel: EducationLevel;
-  schoolType: SchoolType;
-}
-
-// Main interface for an individual
 export interface Individual {
   id: string;
-  personalInfo: {
-    dob: string; // Format: DD/MM/YYYY
-    age: number;
-    gender: Gender;
-    relationship: Relationship;
-    citizenship: Citizenship;
-    ethnicity: Ethnicity;
-    maritalStatus: MaritalStatus;
-  };
-  education: Education;
-  literacy: LiteracyStatus;
-  income: Income;
+  dob: string; // Format: DD/MM/YYYY
+  age: string;
+  gender: Gender;
+  relationship: Relationship;
+  citizenship: Citizenship;
+  ethnicity: Ethnicity;
+  marital_status: MaritalStatus;
+
+  // Geographic information
+  subdistrict: string;
+  area_type: AreaType;
+  latitude?: number;
+  longitude?: number;
+
+  education_current: YesNo;
+  education_level: EducationLevel;
+  school_type: SchoolType;
+
+  literacy_en: YesNo;
+  literacy_my: YesNo;
+  literacy_cn: YesNo;
+  literacy_tm: YesNo;
+
+  income_personal: number;
+  income_household: number;
+  income_other: number;
+  income_total: number;
+
+  heart_disease: YesNo;
+  asthma: YesNo;
+  stroke: YesNo;
+  arthritis: YesNo;
+  dengue: YesNo;
+  bp_12months: YesNo;
+  kidney_disease: YesNo;
+  kidney_dialysis: YesNo;
+
+  bp_measured: YesNo;
+  bp_diagnosed: YesNo;
+  bp_12m_diagnosis: YesNo;
+  bp_medication: YesNo;
+
+  sugar_measured: YesNo;
+  diabetes_diagnosed: YesNo;
+  insulin_current: YesNo;
+  diabetes_medication: YesNo;
 }
