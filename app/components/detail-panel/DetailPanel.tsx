@@ -3,6 +3,11 @@ import PlotlyPyramid from '../homepage/PlotlyPyramid';
 import type { Dataset } from '../../data/sampleDatasets';
 import './DetailPanel.css';
 
+const sourceMap: Record<string, string> = {
+  "health-round-1": "/data/demo.csv",
+  "health-round-2": "/data/demo2.csv"
+};
+
 interface DetailPanelProps {
   isOpen: boolean;
   selectedDataset: Dataset | null;
@@ -11,6 +16,8 @@ interface DetailPanelProps {
 
 const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedDataset, onClose }) => {
   if (!isOpen || !selectedDataset) return null;
+
+  const dataSource = sourceMap[selectedDataset.id] || `/data/${selectedDataset.id}.csv`;
 
   return (
     <div className="detail-panel">
@@ -46,7 +53,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedDataset, onCl
         <div className="detail-section">
           <h4>Population Pyramid</h4>
           <div className="pyramid-container">
-            <PlotlyPyramid source={`/data/${selectedDataset.id}.csv`} />
+            <PlotlyPyramid source={dataSource} />
           </div>
         </div>
         <div className="detail-section">

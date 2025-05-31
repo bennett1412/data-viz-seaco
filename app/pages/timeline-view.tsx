@@ -26,26 +26,46 @@ interface TimelineItem {
 // Sample timeline data - this would come from your actual data
 const timelineData: TimelineItem[] = [
   {
-    id: '1',
-    date: '2023-01',
-    title: 'Initial Survey',
-    description: 'First round of data collection',
-    variables: ['age', 'gender', 'ethnicity', 'marital_status'],
+    id: 'health-round-1',
+    date: '2022-06',
+    title: 'Health Round 1',
+    description: 'First round of health data collection focusing on non-communicable diseases and general health indicators.',
+    variables: [
+      'heart_disease',
+      'asthma',
+      'stroke',
+      'arthritis',
+      'dengue',
+      'kidney_disease',
+      'bp_measured',
+      'diabetes_diagnosed',
+      'bp_diagnosed',
+      'bp_medication',
+      'diabetes_medication'
+    ],
     filePath: '/data/demo.csv'
   },
   {
-    id: '2',
-    date: '2023-03',
-    title: 'Health Assessment',
-    description: 'Health indicators and conditions',
-    variables: ['heart_disease', 'asthma', 'stroke', 'arthritis']
-  },
-  {
-    id: '3',
-    date: '2023-06',
-    title: 'Follow-up Survey',
-    description: 'Updated demographic and health data',
-    variables: ['bp_measured', 'diabetes_diagnosed', 'income_total']
+    id: 'health-round-2',
+    date: '2022-12',
+    title: 'Health Round 2',
+    description: 'Second round of health data collection with additional focus on disease progression and treatment outcomes.',
+    variables: [
+      'income_personal',
+      'income_household',
+      'income_other',
+      'income_total',
+      'education_current',
+      'education_level',
+      'school_type',
+      'literacy_en',
+      'literacy_my',
+      'literacy_cn',
+      'literacy_tm',
+      'marital_status',
+      'citizenship'
+    ],
+    filePath: '/data/demo2.csv'
   }
 ];
 
@@ -63,6 +83,9 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedItem, onClose
   const handleExplore = () => {
     navigate(`/explore/${selectedItem.id}`);
   };
+
+  // Use the same data source for both datasets to ensure consistency
+  const dataSource = '/data/demo.csv';
 
   return (
     <div className="detail-panel">
@@ -90,7 +113,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedItem, onClose
         <div className="detail-section">
           <h4>Population Pyramid</h4>
           <div className="pyramid-container">
-            <PlotlyPyramid source={selectedItem.filePath || '/data/demo.csv'} />
+            <PlotlyPyramid source={dataSource} />
           </div>
         </div>
         <div className="detail-section">
