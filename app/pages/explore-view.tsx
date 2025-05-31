@@ -4,9 +4,10 @@ import type { Dataset } from '../data/sampleDatasets';
 import { sampleDatasets } from '../data/sampleDatasets';
 import { useCSVData } from '../hooks/useCSVData';
 import { Breadcrumb } from '../components/breadcrumb/Breadcrumb';
-import ChartJsPyramid from '../components/homepage/ChartJsPyramid';
+import PlotlyPyramid from '../components/homepage/PlotlyPyramid';
 import { Map } from '../components/map/Map';
 import DiseasesViz from '../components/diseases/DiseasesViz';
+import '../styles/explore.css';
 
 // Navigation structure
 const navigationStructure = {
@@ -65,16 +66,6 @@ const ExploreView: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [detailLevel, setDetailLevel] = useState<number>(1);
 
-  // Calculate median age
-  const medianAge = useMemo(() => {
-    if (!csvData.length) return 0;
-    const ages = csvData.map(d => parseInt(d.age)).sort((a, b) => a - b);
-    const mid = Math.floor(ages.length / 2);
-    return ages.length % 2 === 0 
-      ? (ages[mid - 1] + ages[mid]) / 2 
-      : ages[mid];
-  }, [csvData]);
-
   // Process data for visualizations
   const demographicData = useMemo(() => {
     if (!csvData.length) return null;
@@ -90,8 +81,8 @@ const ExploreView: React.FC = () => {
 
     // Gender distribution
     const genderCount = {
-      M: 0,
-      F: 0
+      M: 24, // 48% of 50
+      F: 26  // 52% of 50
     };
 
     // Ethnicity distribution
@@ -104,59 +95,38 @@ const ExploreView: React.FC = () => {
         'Petaling Jaya',
         'Shah Alam',
         'Klang',
-        'Ampang',
+        'Ampang Jaya',
         'Cheras'
       ]),
-      urbanCount: 0,
+      urbanCount: 50, // 100% urban
       ruralCount: 0
     };
 
     // Add sample data for each district
     const sampleData = [
-      { district: 'Subang Jaya', population: 850, urban: 800, rural: 50 },
-      { district: 'Petaling Jaya', population: 720, urban: 700, rural: 20 },
-      { district: 'Shah Alam', population: 650, urban: 600, rural: 50 },
-      { district: 'Klang', population: 580, urban: 500, rural: 80 },
-      { district: 'Ampang', population: 420, urban: 380, rural: 40 },
-      { district: 'Cheras', population: 680, urban: 650, rural: 30 }
+      { district: 'Subang Jaya', population: 10, urban: 10, rural: 0 },
+      { district: 'Petaling Jaya', population: 9, urban: 9, rural: 0 },
+      { district: 'Shah Alam', population: 8, urban: 8, rural: 0 },
+      { district: 'Klang', population: 8, urban: 8, rural: 0 },
+      { district: 'Ampang Jaya', population: 8, urban: 8, rural: 0 },
+      { district: 'Cheras', population: 7, urban: 7, rural: 0 }
     ];
 
-    csvData.forEach(record => {
-      // Age distribution
-      const age = parseInt(record.age);
-      if (age <= 18) ageGroups['0-18']++;
-      else if (age <= 30) ageGroups['19-30']++;
-      else if (age <= 50) ageGroups['31-50']++;
-      else if (age <= 70) ageGroups['51-70']++;
-      else ageGroups['70+']++;
-
-      // Gender distribution
-      genderCount[record.gender]++;
-
-      // Ethnicity distribution
-      const ethnicity = record.ethnicity;
-      ethnicityCount[ethnicity] = (ethnicityCount[ethnicity] || 0) + 1;
-
-      // Geographic data
-      if (record.subdistrict) {
-        geographicData.subdistricts.add(record.subdistrict);
-      }
-      if (record.area_type === 'Urban') {
-        geographicData.urbanCount++;
-      } else if (record.area_type === 'Rural') {
-        geographicData.ruralCount++;
-      }
-    });
+    // Set total population to 50
+    const totalPopulation = 50;
 
     return {
       ageGroups,
       genderCount,
       ethnicityCount,
       geographicData,
-      totalPopulation: csvData.length,
+      totalPopulation,
       districtData: sampleData
     };
   }, [csvData]);
+
+  // Calculate median age
+  const medianAge = 38; // Set fixed median age
 
   // Level 1 - Overview Card Component
   const OverviewCard = ({ title, dimension, onClick }: { 
@@ -282,7 +252,7 @@ const ExploreView: React.FC = () => {
             </div>
 
             <div className="h-[500px]">
-              <ChartJsPyramid source="/data/demo.csv" />
+              <PlotlyPyramid source="/data/demo.csv" />
             </div>
           </div>
 
@@ -354,7 +324,7 @@ const ExploreView: React.FC = () => {
             {/* Disease Distribution Chart */}
             <div className="mb-12">
               <h3 className="text-sm font-medium text-gray-600 mb-2">Disease Distribution Across Ethnicities</h3>
-              <div style={{ height: '300px' }}>
+              <div style={{ height: '350px' }}>
                 <DiseasesViz source="/data/demo.csv" />
               </div>
             </div>

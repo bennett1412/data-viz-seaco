@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import ContentBody from "./ContentBody";
-import ChartJsPyramid from "./ChartJsPyramid";
+import PlotlyPyramid from "./PlotlyPyramid";
 import type { DataSource } from "./ContentBody";
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
         totalParticipants: 5000,
         collectionDate: "2023-01-15",
         description: "Complete dataset containing all rounds of data collection, including demographic information, health indicators, and socioeconomic data.",
-        categories: ["Demographics", "Health", "Socioeconomic"],
+        categories: ["Demographics", "Health", "Wealth"],
         methodology: "Data collection followed WHO STEPS methodology for chronic disease risk factor surveillance. Multi-stage stratified random sampling was employed, with primary sampling units (PSUs) selected based on population density and socioeconomic status. Face-to-face interviews were conducted using standardized WHO STEPS questionnaires, complemented by physical measurements and biochemical assessments."
       }
     },
@@ -39,7 +39,7 @@ const Home = () => {
         totalParticipants: 2800,
         collectionDate: "2022-12-15",
         description: "Second round of health data collection with additional focus on disease progression and treatment outcomes.",
-        categories: ["Health", "Demographics", "Treatment"],
+        categories: ["Wealth", "Demographics"],
         methodology: "This survey implemented the WHO Health Observatory methodology with a three-stage sampling design. Primary sampling units were selected using probability proportional to size (PPS) sampling, followed by systematic sampling of households and random selection of eligible respondents. Data collection utilized a mixed-mode approach combining face-to-face interviews, self-administered questionnaires, and digital health records linkage."
       }
     }
@@ -58,7 +58,7 @@ const Home = () => {
   };
 
   const getVisualisations = (sourceId: string) => {
-    return <ChartJsPyramid source={sourceId} />;
+    return <PlotlyPyramid source={sourceId} />;
   };
 
   return (
@@ -127,8 +127,8 @@ const Home = () => {
             selectedSource={selectedSource!}
             categories={[
               { name: "Demographic Data", data: [true, true, true] },
-              { name: "NCI Data", data: [true, true, true] },
-              { name: "Wealth data", data: [true, false, false] },
+              { name: "Health Data", data: [true, true, false] },
+              { name: "Wealth Data", data: [true, false, true] },
             ]}
             handleSourceClick={handleSourceClick}
             getVisualisations={getVisualisations}

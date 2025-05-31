@@ -1,0 +1,11 @@
+/* Make the chart bigger in the explore page */
+.explore-page-chart {
+  height: 400px !important;
+  max-width: 100% !important;
+}
+
+/* Adjust the grid layout for the explore page */
+.explore-page-chart {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+} 

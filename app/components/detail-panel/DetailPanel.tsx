@@ -1,5 +1,5 @@
 import React from 'react';
-import ChartJsPyramid from '../homepage/ChartJsPyramid';
+import PlotlyPyramid from '../homepage/PlotlyPyramid';
 import type { Dataset } from '../../data/sampleDatasets';
 import './DetailPanel.css';
 
@@ -46,7 +46,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedDataset, onCl
         <div className="detail-section">
           <h4>Population Pyramid</h4>
           <div className="pyramid-container">
-            <ChartJsPyramid source={`/data/${selectedDataset.id}.csv`} />
+            <PlotlyPyramid source={`/data/${selectedDataset.id}.csv`} />
           </div>
         </div>
         <div className="detail-section">

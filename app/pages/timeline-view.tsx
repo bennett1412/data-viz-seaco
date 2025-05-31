@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Individual } from '../types/SeacoTypes';
 import './timeline-view.css';
-import ChartJsPyramid from '../components/homepage/ChartJsPyramid';
+import PlotlyPyramid from '../components/homepage/PlotlyPyramid';
 
 // Define data categories and their associated variables
 const DATA_CATEGORIES = {
@@ -90,7 +90,7 @@ const DetailPanel: React.FC<DetailPanelProps> = ({ isOpen, selectedItem, onClose
         <div className="detail-section">
           <h4>Population Pyramid</h4>
           <div className="pyramid-container">
-            <ChartJsPyramid source={selectedItem.filePath || '/data/demo.csv'} />
+            <PlotlyPyramid source={selectedItem.filePath || '/data/demo.csv'} />
           </div>
         </div>
         <div className="detail-section">
